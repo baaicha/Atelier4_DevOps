@@ -33,5 +33,11 @@ pipeline {
                 sh 'ssh user@remote-server "docker run -d -p 5000:5000 --name my-python-app ${DOCKER_HUB_CREDENTIALS_USR}/my-python-app:latest"'
             }
         }
+        stage('Check Credentials') {
+           steps {
+               echo "Docker Hub user: ${DOCKER_HUB_CREDENTIALS_USR}"
+           }
+        }
+
     }
 }
