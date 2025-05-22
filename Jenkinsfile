@@ -24,13 +24,12 @@ pipeline {
                 sh 'docker push ${DOCKER_HUB_CREDENTIALS_USR}/my-python-app:latest'
             }
         }
-        stage('Deploy') {
+        stage('Deploy Locally') {
             steps {
-                sh 'echo "Deploying the application..."'
-                sh 'ssh user@remote-server "docker pull ${DOCKER_HUB_CREDENTIALS_USR}/my-python-app:latest"'
-                sh 'ssh user@remote-server "docker stop my-python-app || true"'
-                sh 'ssh user@remote-server "docker rm my-python-app || true"'
-                sh 'ssh user@remote-server "docker run -d -p 5000:5000 --name my-python-app ${DOCKER_HUB_CREDENTIALS_USR}/my-python-app:latest"'
+                sh 'echo "Deploying the application locally..."'
+                sh 'docker stop my-python-app || true'
+                sh 'docker rm my-python-app || true'
+                sh 'docker run -d -p 5000:5000 --name my-python-app my-python-app'
             }
         }
         stage('Check Credentials') {
